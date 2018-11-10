@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <Authors>Anton Zhelezniakou &lt;ZelAntonLJ@gmail.com&gt;</Authors>
+    <Company></Company>
+    <PackageProjectUrl>https://github.com/ZelAnton/Contract.Validation</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>2018 (c) Anton Zhelezniakou &lt;ZelAntonLJ@gmail.com&gt;</Copyright>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
+    <Configurations>Debug;Release</Configurations>
+    <Product>Contract.Validation</Product>
+    <PackageId>Contract.Validation</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
+    <PackageId>Contract.Validation</PackageId>
+    <AssemblyName>Contract.Validation</AssemblyName>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <PackageId>Contract.Validation.Debug</PackageId>
+    <AssemblyName>Contract.Validation.Debug</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+  </ItemGroup>
+
+</Project>
