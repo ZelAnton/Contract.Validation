@@ -8,9 +8,9 @@
     <PackageProjectUrl>https://github.com/ZelAnton/Contract.Validation</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>2018 (c) Anton Zhelezniakou &lt;ZelAntonLJ@gmail.com&gt;</Copyright>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.2</Version>
     <Configurations>Debug;Release</Configurations>
     <Product>Contract.Validation</Product>
     <PackageId>Contract.Validation</PackageId>

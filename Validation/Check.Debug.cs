@@ -51,7 +51,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentNotNull<T>(
-                [NoEnumeration] T argument,
+                [NotNull, NoEnumeration] T argument,
                 [NotNull, NotWhitespace, InvokerParameterName] string argumentName,
                 [CanBeNull] string message = null)
                 where T : class
@@ -100,7 +100,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentValuesNotEmpty<T>(
-                [ItemNotEmpty, NoEnumeration] IEnumerable<T> values,
+                [NotNull, ItemNotEmpty, NoEnumeration] IEnumerable<T> values,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -117,7 +117,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentItemsNotNull<T>(
-                [ItemNotNull, NoEnumeration] T collection,
+                [NotNull, ItemNotNull, NoEnumeration] T collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 where T : class, IEnumerable
@@ -134,7 +134,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentItemsNotNull<T>(
-                [ItemNotNull, NoEnumeration] IEnumerable<T?> collection,
+                [NotNull, ItemNotNull, NoEnumeration] IEnumerable<T?> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -152,7 +152,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentItemsNotEmpty(
-                [ItemNotNull, ItemNotEmpty] IEnumerable<string> collection,
+                [NotNull, ItemNotNull, ItemNotEmpty] IEnumerable<string> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 => Check.ArgumentItemsNotEmpty(collection, collectionName, message);
@@ -170,7 +170,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentItemsNotWhitespace(
-                [ItemNotNull, ItemNotWhitespace] IEnumerable<string> collection,
+                [NotNull, ItemNotNull, ItemNotWhitespace] IEnumerable<string> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 => Check.ArgumentItemsNotWhitespace(collection, collectionName, message);
@@ -186,7 +186,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentNotNullOrEmpty(
-                [NotEmpty] string argument,
+                [NotNull, NotEmpty] string argument,
                 [NotNull, NotWhitespace, InvokerParameterName] string argumentName,
                 [CanBeNull] string message = null)
                 => Check.ArgumentNotNullOrEmpty(argument, argumentName, message);
@@ -203,7 +203,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentNotNullOrWhitespace(
-                [NotWhitespace] string argument,
+                [NotNull, NotWhitespace] string argument,
                 [NotNull, NotWhitespace, InvokerParameterName] string argumentName,
                 [CanBeNull] string message = null)
                 => Check.ArgumentNotNullOrWhitespace(argument, argumentName, message);
@@ -218,7 +218,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentNotNullNotDbNull<T>(
-                [NotEmpty] T argument,
+                [NotNull, NotEmpty] T argument,
                 [NotNull, NotWhitespace, InvokerParameterName] string argumentName,
                 [CanBeNull] string message = null)
                 where T : class
@@ -352,7 +352,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void NotNull<T>(
-                [NoEnumeration] T value,
+                [NotNull, NoEnumeration] T value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 where T : class
@@ -402,7 +402,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ValuesNotEmpty<T>(
-                [ItemNotEmpty, NoEnumeration] IEnumerable<T> values,
+                [NotNull, ItemNotEmpty, NoEnumeration] IEnumerable<T> values,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -419,7 +419,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void NotNullOrEmpty(
-                [NotEmpty] string value,
+                [NotNull, NotEmpty] string value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 => Check.NotNullOrEmpty(value, valueName, message);
@@ -436,7 +436,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void NotNullOrWhitespace(
-                [NotWhitespace] string value,
+                [NotNull, NotWhitespace] string value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 => Check.NotNullOrWhitespace(value, valueName, message);
@@ -451,7 +451,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void NotNullNotDbNull<T>(
-                [NotEmpty, NoEnumeration] T value,
+                [NotNull, NotEmpty, NoEnumeration] T value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 where T : class
@@ -467,7 +467,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void NotNull<T, TException>(
-                [NoEnumeration] T value,
+                [NotNull, NoEnumeration] T value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 where T : class
@@ -503,7 +503,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ItemsNotNull<T>(
-                [ItemNotNull, NoEnumeration] T collection,
+                [NotNull, ItemNotNull, NoEnumeration] T collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 where T : class, IEnumerable
@@ -520,7 +520,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ItemsNotNull<T>(
-                [ItemNotNull, NoEnumeration] IEnumerable<T?> collection,
+                [NotNull, ItemNotNull, NoEnumeration] IEnumerable<T?> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -538,7 +538,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ItemsNotEmpty(
-                [ItemNotNull, ItemNotEmpty, NoEnumeration] IEnumerable<string> collection,
+                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] IEnumerable<string> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 => Check.ItemsNotEmpty(collection, collectionName, message);
@@ -556,7 +556,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ItemsNotWhitespace(
-                [ItemNotNull, ItemNotWhitespace, NoEnumeration] IEnumerable<string> collection,
+                [NotNull, ItemNotNull, ItemNotWhitespace, NoEnumeration] IEnumerable<string> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 => Check.ItemsNotWhitespace(collection, collectionName, message);
@@ -571,7 +571,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ItemsNotNullNotDbNull<T>(
-                [ItemNotNull, ItemNotEmpty, NoEnumeration] T collection,
+                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] T collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 where T : class, IEnumerable
@@ -685,7 +685,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ItemsIs<T>(
-                [ItemNotNull, NoEnumeration] IEnumerable collection,
+                [NotNull, ItemNotNull, NoEnumeration] IEnumerable collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 => Check.ItemsIs<T>(collection, collectionName, message);
@@ -701,9 +701,9 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ItemsIs<T>(
-                [ItemNotNull, NoEnumeration] IEnumerable collection,
+                [NotNull, ItemNotNull, NoEnumeration] IEnumerable collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
-                [InstantHandle] ObjectMessageFactory messageFactory)
+                [NotNull, InstantHandle] ObjectMessageFactory messageFactory)
                 => Check.ItemsIs<T>(collection, collectionName, messageFactory);
 
             /// <summary>Проверка того, что все элементы последовательности являются объектами нужного типа</summary>
@@ -716,8 +716,8 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ItemsIs<T>(
-                [ItemNotNull, NoEnumeration] IEnumerable collection,
-                [InstantHandle] ObjectMessageFactory messageFactory)
+                [NotNull, ItemNotNull, NoEnumeration] IEnumerable collection,
+                [NotNull, InstantHandle] ObjectMessageFactory messageFactory)
                 => Check.ItemsIs<T>(collection, UnknownValueName, messageFactory);
 
             /// <summary>Условие, которое должно выполняться для всех элементов перечисления</summary>
@@ -732,9 +732,9 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void All<T>(
-                [NoEnumeration] IEnumerable<T> collection,
+                [NotNull, NoEnumeration] IEnumerable<T> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
-                [InstantHandle] Func<T, bool> predicate,
+                [NotNull, InstantHandle] Func<T, bool> predicate,
                 [CanBeNull] string message = null)
                 => Check.All(collection, collectionName, predicate, message);
 
@@ -750,9 +750,9 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void All<T>(
-                [NoEnumeration] IEnumerable<T> collection,
+                [NotNull, NoEnumeration] IEnumerable<T> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
-                [InstantHandle] Func<T, bool> predicate,
+                [NotNull, InstantHandle] Func<T, bool> predicate,
                 [NotNull] TemplateMessageFactory<T> messageFactory)
                 => Check.All(collection, collectionName, predicate, messageFactory);
 
@@ -767,8 +767,8 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void All<T>(
-                [NoEnumeration] IEnumerable<T> collection,
-                [InstantHandle] Func<T, bool> predicate,
+                [NotNull, NoEnumeration] IEnumerable<T> collection,
+                [NotNull, InstantHandle] Func<T, bool> predicate,
                 [NotNull] TemplateMessageFactory<T> messageFactory)
                 => Check.All(collection, UnknownValueName, predicate, messageFactory);
 
@@ -783,7 +783,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void NotNullNotEmpty<TEnumerable>(
-                [NotEmpty, NoEnumeration] TEnumerable collection,
+                [NotNull, NotEmpty, NoEnumeration] TEnumerable collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull, CanBeEmpty] string message = null)
                 where TEnumerable : class, IEnumerable
@@ -800,7 +800,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ArgumentNotNullNotEmpty<TEnumerable>(
-                [NotEmpty, NoEnumeration] TEnumerable collection,
+                [NotNull, NotEmpty, NoEnumeration] TEnumerable collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull, CanBeEmpty] string message = null)
                 where TEnumerable : class, IEnumerable
@@ -834,7 +834,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ObjectState<T>(
-                [NoEnumeration] T value,
+                [NotNull, NoEnumeration] T value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [NotNull] Func<T, bool> condition,
                 [CanBeNull, InvokerParameterName] string message = null)
@@ -851,7 +851,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void ObjectState<T>(
-                [NoEnumeration] T value,
+                [NotNull, NoEnumeration] T value,
                 [NotNull] Func<T, bool> condition,
                 [CanBeNull, InvokerParameterName] string message = null)
                 => Check.ObjectState(value, UnknownValueName, condition, message);
@@ -902,7 +902,7 @@ namespace Contract.Validation
 #endif
             public static void AllEnumInRange<T>(
                 [NotNull] Type enumType,
-                [NoEnumeration] IEnumerable<T> collection,
+                [NotNull, NoEnumeration] IEnumerable<T> collection,
                 [NotNull, NotWhitespace, InvokerParameterName] string collectionName,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -919,7 +919,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void Is<T>(
-                [NoEnumeration] object value,
+                [NotNull, NoEnumeration] object value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 => Check.Is<T>(value, valueName, message);
@@ -935,9 +935,9 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void Is<T>(
-                [NoEnumeration] object value,
+                [NotNull, NoEnumeration] object value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
-                [InstantHandle] ObjectMessageFactory messageFactory)
+                [NotNull, InstantHandle] ObjectMessageFactory messageFactory)
                 => Check.Is<T>(value, valueName, messageFactory);
 
             /// <summary>Проверка типа объекта, выбрасывает исключительную ситуацию если проверка не пройдена</summary>
@@ -950,8 +950,8 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void Is<T>(
-                [NoEnumeration] object value,
-                [InstantHandle] ObjectMessageFactory messageFactory)
+                [NotNull, NoEnumeration] object value,
+                [NotNull, InstantHandle] ObjectMessageFactory messageFactory)
                 => Check.Is<T>(value, UnknownValueName, messageFactory);
 
             /// <summary>Проверка того, что файл по указанному пути существует на диске</summary>
@@ -965,7 +965,7 @@ namespace Contract.Validation
             /// <returns>Путь к файлу</returns>
             [Conditional("DEBUG"), Conditional("FULL_CHECK"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
             public static void FileExists(
-                [NotWhitespace, FileExists] string fileName,
+                [NotNull, NotWhitespace, FileExists] string fileName,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 => Check.FileExists(fileName, valueName, message);
@@ -981,7 +981,7 @@ namespace Contract.Validation
             /// <returns>Путь к папке</returns>
             [Conditional("DEBUG"), Conditional("FULL_CHECK"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
             public static void DirectoryExists(
-                [NotWhitespace, DirectoryExists] string path,
+                [NotNull, NotWhitespace, DirectoryExists] string path,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 => Check.DirectoryExists(path, valueName, message);
@@ -996,7 +996,7 @@ namespace Contract.Validation
             /// <returns>Стрим</returns>
             [Conditional("DEBUG"), Conditional("FULL_CHECK"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
             public static void StreamNotEmpty(
-                [NotEmpty] Stream stream,
+                [NotNull, NotEmpty] Stream stream,
                 [NotNull, NotWhitespace, InvokerParameterName] string streamName,
                 [CanBeNull] string message = null)
                 => Check.StreamNotEmpty(stream, streamName, message);
@@ -1016,7 +1016,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static void UriCorrect(
-                [NotWhitespace] string value,
+                [NotNull, NotWhitespace] string value,
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 UriScheme scheme = UriScheme.Any,
                 [CanBeNull] string message = null)

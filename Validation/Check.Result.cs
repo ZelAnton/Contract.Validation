@@ -15,6 +15,7 @@ using JetBrains.Annotations;
 using System.Runtime.ConstrainedExecution;
 #endif
 
+// ReSharper disable ArrangeAttributes
 // ReSharper disable InvalidXmlDocComment
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable ExplicitCallerInfoArgument
