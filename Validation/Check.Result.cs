@@ -49,7 +49,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static Guid GuidNotEmpty(
-                [NotEmpty] Guid guid,
+                Guid guid,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -70,7 +70,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNull<T>(
-                [NotNull, NoEnumeration] T value,
+                [NoEnumeration] T value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -92,7 +92,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNull<T>(
-                [NotNull, NoEnumeration] T? value,
+                [NoEnumeration] T? value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -116,7 +116,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ValueNotEmpty<T>(
-                [NotEmpty] T value,
+                T value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -138,7 +138,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ValuesNotEmpty<T>(
-                [NotNull, ItemNotEmpty, NoEnumeration] IEnumerable<T> values,
+                [NoEnumeration] IEnumerable<T> values,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -161,7 +161,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static string NotNullOrEmpty(
-                [NotNull, NotEmpty] string value,
+                string value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -227,7 +227,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNull<T, TException>(
-                [NotNull, NoEnumeration] T value,
+                [NoEnumeration] T value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -250,7 +250,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNull<T, TException>(
-                [NotNull, NoEnumeration] T? value,
+                [NoEnumeration] T? value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -266,9 +266,9 @@ namespace Contract.Validation
                     : (T)value;
 
             /// <summary>Проверка что элементы последовательности не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ItemNullsNotAllowedException">Если в последовательности присутствуют элементы равные null</exception>
-            /// <param name="collection">Коллекция, элементы которой должен быть не null</param>
+            /// <param name="value">Коллекция, элементы которой должен быть не null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -276,7 +276,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ItemsNotNull<T>(
-                [NotNull, ItemNotNull, NoEnumeration] T collection,
+                [NoEnumeration] T value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -285,13 +285,13 @@ namespace Contract.Validation
                 string callerMemberName = null)
                 where T : class, IEnumerable
                 => FullCheck
-                    ? Check.ItemsNotNull(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : collection;
+                    ? Check.ItemsNotNull(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка что элементы последовательности не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ItemNullsNotAllowedException">Если в последовательности присутствуют элементы равные null</exception>
-            /// <param name="collection">Коллекция, элементы которой должен быть не null</param>
+            /// <param name="value">Коллекция, элементы которой должен быть не null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -299,7 +299,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ItemsNotNull<T>(
-                [NotNull, ItemNotNull, NoEnumeration] IEnumerable<T?> collection,
+                [NoEnumeration] IEnumerable<T?> value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -308,14 +308,14 @@ namespace Contract.Validation
                 string callerMemberName = null)
                 where T : struct
                 => FullCheck
-                    ? Check.ItemsNotNull(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : collection.ConvertAll<T>();
+                    ? Check.ItemsNotNull(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value.ConvertAll<T>();
 
             /// <summary>Проверка что все строки не null и не пусты</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ItemNullsNotAllowedException">Если в последовательности присутствуют строки равные null</exception>
             /// <exception cref="ItemEmptyStringNotAllowedException">Если в последовательности присутствуют пустые строки</exception>
-            /// <param name="collection">Коллекция строк, которые быть не должны быть равны string.Empty</param>
+            /// <param name="value">Коллекция строк, которые быть не должны быть равны string.Empty</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -323,7 +323,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<string> ItemsNotEmpty(
-                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] IEnumerable<string> collection,
+                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] IEnumerable<string> value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -331,15 +331,15 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.ItemsNotEmpty(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : collection;
+                    ? Check.ItemsNotEmpty(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка что элементы коллекции не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ItemNullsNotAllowedException">Если в последовательности присутствуют строки равные null</exception>
             /// <exception cref="ItemEmptyStringNotAllowedException">Если в последовательности присутствуют пустые строки</exception>
             /// <exception cref="ItemWhitespaceNotAllowedException">Если в последовательности присутствуют строки не содержащие ничего кроме пробелов</exception>
-            /// <param name="collection">Коллекция строк, которые быть не должны быть равны string.Empty</param>
+            /// <param name="value">Коллекция строк, которые быть не должны быть равны string.Empty</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, ItemNotNull, ItemNotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -347,7 +347,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<string> ItemsNotWhitespace(
-                [NotNull, ItemNotNull, ItemNotWhitespace, NoEnumeration] IEnumerable<string> collection,
+                [NotNull, ItemNotNull, ItemNotWhitespace, NoEnumeration] IEnumerable<string> value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -355,12 +355,12 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.ItemsNotWhitespace(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : collection;
+                    ? Check.ItemsNotWhitespace(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка что элементы коллекции не null и не DBNull</summary>
             /// <exception cref="NullReferenceException">Если условие не выполняется</exception>
-            /// <param name="collection">Коллекция, элементы которой должен быть не null</param>
+            /// <param name="value">Коллекция, элементы которой должен быть не null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -368,7 +368,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ItemsNotNullNotDbNull<T>(
-                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] T collection,
+                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] T value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -377,8 +377,8 @@ namespace Contract.Validation
                 string callerMemberName = null)
                 where T : class, IEnumerable
                 => FullCheck
-                    ? Check.ItemsNotNullNotDbNull(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : collection;
+                    ? Check.ItemsNotNullNotDbNull(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка условия</summary>
             /// <exception cref="Exception">Если условие не выполняется</exception>
@@ -448,7 +448,7 @@ namespace Contract.Validation
             /// <summary>Проверка того, что все элементы последовательности являются объектами нужного типа</summary>
             /// <exception cref="ArgumentNullException">Если перечисление равно null</exception>
             /// <exception cref="Exception">Если обнаружен элемент не являющийся объектом нужного типа</exception>
-            /// <param name="collection">Коллекция</param>
+            /// <param name="value">Коллекция</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -456,7 +456,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ItemsIs<T>(
-                [NotNull, ItemNotNull, NoEnumeration] IEnumerable collection,
+                [NoEnumeration] IEnumerable value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -464,13 +464,13 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.ItemsIs<T>(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : collection.ConvertAll<T>();
+                    ? Check.ItemsIs<T>(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value.ConvertAll<T>();
 
             /// <summary>Проверка того, что все элементы последовательности являются объектами нужного типа</summary>
             /// <exception cref="ArgumentNullException">Если перечисление равно null</exception>
             /// <exception cref="Exception">Если обнаружен элемент не являющийся объектом нужного типа</exception>
-            /// <param name="collection">Коллекция</param>
+            /// <param name="value">Коллекция</param>
             /// <param name="messageFactory">Метод-фабрика сообщений об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -478,7 +478,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ItemsIs<T>(
-                [NotNull, ItemNotNull, NoEnumeration] IEnumerable collection,
+                [NoEnumeration] IEnumerable value,
                 [NotNull, InstantHandle] ObjectMessageFactory messageFactory,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -486,13 +486,13 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.ItemsIs<T>(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, messageFactory)
-                    : collection.ConvertAll<T>();
+                    ? Check.ItemsIs<T>(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, messageFactory)
+                    : value.ConvertAll<T>();
 
             /// <summary>Условие, которое должно выполняться для всех элементов перечисления</summary>
             /// <exception cref="ArgumentNullException">Если перечисление или условие проверки элемента равно null</exception>
             /// <exception cref="Exception">Если для какого-нибудь элемента перечисления не выполнится переданное условие</exception>
-            /// <param name="collection">Коллекция</param>
+            /// <param name="value">Коллекция</param>
             /// <param name="predicate">Условие</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
@@ -501,7 +501,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> All<T>(
-                [NotNull, NoEnumeration] IEnumerable<T> collection,
+                [NoEnumeration] IEnumerable<T> value,
                 [NotNull, InstantHandle] Func<T, bool> predicate,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
@@ -510,13 +510,13 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.All(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, predicate, message)
-                    : collection;
+                    ? Check.All(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, predicate, message)
+                    : value;
 
             /// <summary>Условие, которое должно выполняться для всех элементов перечисления</summary>
             /// <exception cref="ArgumentNullException">Если перечисление или условие проверки элемента равно null</exception>
             /// <exception cref="Exception">Если для какого-нибудь элемента перечисления не выполнится переданное условие</exception>
-            /// <param name="collection">Коллекция</param>
+            /// <param name="value">Коллекция</param>
             /// <param name="predicate">Условие</param>
             /// <param name="messageFactory">Метод-конструктор сообщения об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
@@ -525,7 +525,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> All<T>(
-                [NotNull, NoEnumeration] IEnumerable<T> collection,
+                [NoEnumeration] IEnumerable<T> value,
                 [NotNull, InstantHandle] Func<T, bool> predicate,
                 [NotNull] TemplateMessageFactory<T> messageFactory,
 #if DEBUG || FULL_CHECK
@@ -534,13 +534,13 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.All(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, predicate, messageFactory)
-                    : collection;
+                    ? Check.All(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, predicate, messageFactory)
+                    : value;
 
             /// <summary>Проверка, что перечисление не пусто</summary>
             /// <exception cref="NullReferenceException">Если перечисление равно null</exception>
             /// <exception cref="CollectionIsEmptyException">Если перечисление пусто</exception>
-            /// <param name="collection">Коллекция</param>
+            /// <param name="value">Коллекция</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -548,7 +548,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static TEnumerable NotNullNotEmpty<TEnumerable>(
-                [NotNull, NotEmpty, NoEnumeration] TEnumerable collection,
+                [NoEnumeration] TEnumerable value,
                 [CanBeNull, CanBeEmpty] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -557,8 +557,8 @@ namespace Contract.Validation
                 string callerMemberName = null)
                 where TEnumerable : class, IEnumerable
                 => FullCheck
-                    ? Check.NotNullNotEmpty(collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : collection;
+                    ? Check.NotNullNotEmpty(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка состояния объекта (значений полей/свойств)</summary>
             /// <exception cref="NullReferenceException">Если value == null</exception>
@@ -572,7 +572,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ObjectState<T>(
-                [NotNull, NoEnumeration] T value,
+                [NoEnumeration] T value,
                 [NotNull] Func<T, bool> condition,
                 [CanBeNull, InvokerParameterName] string message = null,
 #if DEBUG || FULL_CHECK
@@ -633,7 +633,7 @@ namespace Contract.Validation
             /// <summary>Проверка того, что значение является допустимым для данного типа перечня (enum)</summary>
             /// <exception cref="InvalidEnumArgumentException">Если значение является недопустимым</exception>
             /// <param name="enumType">Тип перечня (enum)</param>
-            /// <param name="collection">Список значений</param>
+            /// <param name="value">Список значений</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -642,7 +642,7 @@ namespace Contract.Validation
 #endif
             public static IEnumerable<T> AllEnumInRange<T>(
                 [NotNull] Type enumType,
-                [NotNull, NoEnumeration] IEnumerable<T> collection,
+                [NoEnumeration] IEnumerable<T> value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -651,8 +651,8 @@ namespace Contract.Validation
                 string callerMemberName = null)
                 where T : struct
                 => FullCheck
-                    ? Check.AllEnumInRange(enumType, collection, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : collection;
+                    ? Check.AllEnumInRange(enumType, value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка типа объекта, выбрасывает исключительную ситуацию если проверка не пройдена</summary>
             /// <exception cref="NullReferenceException">Если объект null</exception>
@@ -665,7 +665,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T Is<T>(
-                [NotNull, NoEnumeration] object value,
+                [NoEnumeration] object value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -687,7 +687,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T Is<T>(
-                [NotNull, NoEnumeration] object value,
+                [NoEnumeration] object value,
                 [NotNull, InstantHandle] ObjectMessageFactory messageFactory,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -752,7 +752,7 @@ namespace Contract.Validation
             /// <returns>Стрим</returns>
             [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
             public static Stream StreamNotEmpty(
-                [NotNull, NotEmpty] Stream stream,
+                [NotNull] Stream stream,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]

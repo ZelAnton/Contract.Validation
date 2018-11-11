@@ -50,58 +50,58 @@ namespace Contract.Validation
 
             /// <summary>Проверка аргумента на null</summary>
             /// <exception cref="ArgumentNullException">Если аргумент == null</exception>
-            /// <param name="argument">Объект, который не должен быть равен null</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="value">Объект, который не должен быть равен null</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ArgumentNotNull<T>(
-                [NotNull, NoEnumeration] T argument,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                [NoEnumeration] T value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : class
                 => FullCheck
-                    ? Check.ArgumentNotNull(argument, argumentName, message)
-                    : argument;
+                    ? Check.ArgumentNotNull(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка аргумента на null</summary>
             /// <exception cref="ArgumentNullException">Если аргумент == null</exception>
-            /// <param name="argument">Объект, который не должен быть равен null</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="value">Объект, который не должен быть равен null</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ArgumentNotNull<T>(
-                [NotNull, NoEnumeration] T? argument,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                [NoEnumeration] T? value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
                 => FullCheck
                     // ReSharper disable once AssignNullToNotNullAttribute
-                    ? Check.ArgumentNotNull(argument, argumentName, message)
+                    ? Check.ArgumentNotNull(value, valueName, message)
                     // ReSharper disable once PossibleInvalidOperationException
-                    : (T)argument;
+                    : (T)value;
 
             /// <summary>Проверка аргумента на значение по-умолчанию</summary>
             /// <exception cref="ArgumentValueEmptyException">Если аргумент == default(T)</exception>
             /// <param name="value">Значение, которое не должно быть равно значению по-умолчанию для своего типа</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ArgumentValueNotEmpty<T>(
-                [NotEmpty, NoEnumeration] T value,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                [NoEnumeration] T value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
                 => FullCheck
-                    ? Check.ArgumentValueNotEmpty(value, argumentName, message)
+                    ? Check.ArgumentValueNotEmpty(value, valueName, message)
                     : value;
 
             /// <summary>Проверка перечисление на отсутствие значений по-умолчанию</summary>
@@ -114,7 +114,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ArgumentValuesNotEmpty<T>(
-                [NotNull, ItemNotEmpty, NoEnumeration] IEnumerable<T> values,
+                [NoEnumeration] IEnumerable<T> values,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -123,141 +123,141 @@ namespace Contract.Validation
                     : values;
 
             /// <summary>Проверка что элементы коллекции не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ArgumentItemNullsNotAllowedException">Если в последовательности присутствуют элементы равные null</exception>
-            /// <param name="collection">Коллекция</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ArgumentItemsNotNull<T>(
-                [NotNull, ItemNotNull, NoEnumeration] T collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] T value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : class, IEnumerable
                 => FullCheck
-                    ? Check.ArgumentItemsNotNull(collection, collectionName, message)
-                    : collection;
+                    ? Check.ArgumentItemsNotNull(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка что элементы коллекции не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ArgumentItemNullsNotAllowedException">Если в последовательности присутствуют элементы равные null</exception>
-            /// <param name="collection">Коллекция</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ArgumentItemsNotNull<T>(
-                [NotNull, ItemNotNull, NoEnumeration] IEnumerable<T?> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] IEnumerable<T?> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
                 => FullCheck
-                    ? Check.ArgumentItemsNotNull(collection, collectionName, message)
-                    : collection.Cast<T>();
+                    ? Check.ArgumentItemsNotNull(value, valueName, message)
+                    : value.Cast<T>();
 
             /// <summary>Проверка что все строки в коллекции не null и не пусты</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ArgumentItemNullsNotAllowedException">Если в последовательности присутствуют строки равные null</exception>
             /// <exception cref="ArgumentItemEmptyStringNotAllowedException">Если в последовательности присутствуют пустые строки</exception>
-            /// <param name="collection">Коллекция строк, которые быть не должны быть равны string.Empty</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция строк, которые быть не должны быть равны string.Empty</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<string> ArgumentItemsNotEmpty(
-                [NotNull, ItemNotNull, ItemNotEmpty] IEnumerable<string> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] IEnumerable<string> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ArgumentItemsNotEmpty(collection, collectionName, message)
-                    : collection;
+                    ? Check.ArgumentItemsNotEmpty(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка что элементы коллекции не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ArgumentItemNullsNotAllowedException">Если в последовательности присутствуют строки равные null</exception>
             /// <exception cref="ArgumentItemEmptyStringNotAllowedException">Если в последовательности присутствуют пустые строки</exception>
             /// <exception cref="ArgumentItemWhitespaceNotAllowedException">Если в последовательности присутствуют строки не содержащие ничего кроме пробелов</exception>
-            /// <param name="collection">Коллекция строк, которые быть не должны быть равны string.Empty</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция строк, которые быть не должны быть равны string.Empty</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, ItemNotNull, ItemNotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<string> ArgumentItemsNotWhitespace(
-                [NotNull, ItemNotNull, ItemNotWhitespace] IEnumerable<string> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                IEnumerable<string> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ArgumentItemsNotWhitespace(collection, collectionName, message)
-                    : collection;
+                    ? Check.ArgumentItemsNotWhitespace(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка строкового аргумента на null и на равенство string.Empty</summary>
             /// <exception cref="ArgumentNullException">Если строка == null</exception>
             /// <exception cref="ArgumentEmptyStringNotAllowedException">Если строка == string.Empty</exception>
-            /// <param name="argument">Строковый аргумент, который не должен быть равен null или string.Empty</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="value">Строковый аргумент, который не должен быть равен null или string.Empty</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static string ArgumentNotNullOrEmpty(
-                [NotNull, NotEmpty] string argument,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                string value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ArgumentNotNullOrEmpty(argument, argumentName, message)
-                    : argument;
+                    ? Check.ArgumentNotNullOrEmpty(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка строкового аргумента на null и на равенство string.Empty или состоять только из пробелов</summary>
             /// <exception cref="ArgumentNullException">Если строка == null</exception>
             /// <exception cref="ArgumentEmptyStringNotAllowedException">Если строка == string.Empty</exception>
             /// <exception cref="ArgumentWhitespaceNotAllowedException">Если строка состоит только из пробелов</exception>
-            /// <param name="argument">Строковый аргумент, который не должен быть равен null или string.Empty, или состоять только из пробелов</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="value">Строковый аргумент, который не должен быть равен null или string.Empty, или состоять только из пробелов</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static string ArgumentNotNullOrWhitespace(
-                [NotNull, NotWhitespace] string argument,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                string value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ArgumentNotNullOrWhitespace(argument, argumentName, message)
-                    : argument;
+                    ? Check.ArgumentNotNullOrWhitespace(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка аргумента на null и DBNull</summary>
             /// <exception cref="ArgumentNullException">Если аргумент == null или == DBNull</exception>
-            /// <param name="argument">Объект, который не должен быть равен null</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="value">Объект, который не должен быть равен null</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ArgumentNotNullNotDbNull<T>(
-                [NotNull, NotEmpty] T argument,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                T value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : class
                 => FullCheck
-                    ? Check.ArgumentNotNullNotDbNull(argument, argumentName, message)
-                    : argument;
+                    ? Check.ArgumentNotNullNotDbNull(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка аргумента</summary>
             /// <exception cref="ArgumentException">Если условие проверки не выполняется</exception>
             /// <param name="condition">Условие проверки значения аргумента</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [ContractAnnotation("condition:false => halt"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
@@ -265,36 +265,36 @@ namespace Contract.Validation
 #endif
             public static void Argument(
                 bool condition,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
             {
                 if (FullCheck)
-                    Check.Argument(condition, argumentName, message);
+                    Check.Argument(condition, valueName, message);
             }
 
             /// <summary>Проверка аргумента</summary>
             /// <exception cref="ArgumentException">Если условие проверки не выполняется</exception>
-            /// <param name="argument">Возвращаемое значение если проверка будет выполнена</param>
+            /// <param name="value">Возвращаемое значение если проверка будет выполнена</param>
             /// <param name="condition">Условие проверки значения аргумента</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
-            [Pure, ContractAnnotation("condition:false => halt; argument:null => null"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("condition:false => halt; value:null => null"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T Argument<T>(
-                [CanBeNull] T argument,
+                [CanBeNull] T value,
                 [NotNull] Func<T, bool> condition,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.Argument(argument, condition, argumentName, message)
-                    : argument;
+                    ? Check.Argument(value, condition, valueName, message)
+                    : value;
 
             /// <summary>Проверка аргумента</summary>
             /// <exception cref="ArgumentException">Если условие проверки не выполняется</exception>
             /// <param name="condition">Условие проверки значения аргумента</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [ContractAnnotation("condition:false => halt"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
@@ -302,17 +302,17 @@ namespace Contract.Validation
 #endif
             public static void Argument(
                 [NotNull, InstantHandle] Func<bool> condition,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
             {
                 if (FullCheck)
-                    Check.Argument(condition, argumentName, message);
+                    Check.Argument(condition, valueName, message);
             }
 
             /// <summary>Проверка попадания значения аргумента в список допустимых значений</summary>
             /// <exception cref="ArgumentOutOfRangeException">Если условие проверки не выполняется</exception>
             /// <param name="condition">Условие проверки значения аргумента</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [ContractAnnotation("condition:false => halt"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
@@ -320,47 +320,47 @@ namespace Contract.Validation
 #endif
             public static void ArgumentInRange(
                 bool condition,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
             {
                 if (FullCheck)
-                    Check.ArgumentInRange(condition, argumentName, message);
+                    Check.ArgumentInRange(condition, valueName, message);
             }
 
             /// <summary>Проверка попадания значения аргумента в список допустимых значений</summary>
             /// <exception cref="ArgumentOutOfRangeException">Если условие проверки не выполняется</exception>
-            /// <param name="argument">Возвращаемое значение если проверка будет выполнена</param>
+            /// <param name="value">Возвращаемое значение если проверка будет выполнена</param>
             /// <param name="condition">Условие проверки значения аргумента</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
-            [Pure, ContractAnnotation("condition:false => halt; argument:null => null"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("condition:false => halt; value:null => null"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ArgumentInRange<T>(
-                [CanBeNull] T argument,
+                [CanBeNull] T value,
                 [NotNull] Func<T, bool> condition,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ArgumentInRange(argument, condition, argumentName, message)
-                    : argument;
+                    ? Check.ArgumentInRange(value, condition, valueName, message)
+                    : value;
 
             /// <summary>Проверка что guid не пуст</summary>
             /// <exception cref="ArgumentOutOfRangeException">Если guid == Guid.Empty</exception>
             /// <param name="guid">Guid, который не должен быть равен Guid.Empty</param>
-            /// <param name="argumentName">Наименование проверяемого параметра</param>
+            /// <param name="valueName">Наименование проверяемого параметра</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static Guid ArgumentGuidNotEmpty(
-                [NotEmpty] Guid guid,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string argumentName = null,
+                Guid guid,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ArgumentGuidNotEmpty(guid, argumentName, message)
+                    ? Check.ArgumentGuidNotEmpty(guid, valueName, message)
                     : guid;
 
             /// <summary>Проверка что guid не пуст</summary>
@@ -373,7 +373,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static Guid GuidNotEmpty(
-                [NotEmpty] Guid guid,
+                Guid guid,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
@@ -390,7 +390,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNull<T>(
-                [NotNull, NoEnumeration] T value,
+                [NoEnumeration] T value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : class
@@ -408,7 +408,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNull<T>(
-                [NotNull, NoEnumeration] T? value,
+                [NoEnumeration] T? value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -428,7 +428,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ValueNotEmpty<T>(
-                [NotEmpty] T value,
+                T value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -446,7 +446,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ValuesNotEmpty<T>(
-                [NotNull, ItemNotEmpty, NoEnumeration] IEnumerable<T> values,
+                [NoEnumeration] IEnumerable<T> values,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -465,7 +465,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static string NotNullOrEmpty(
-                [NotNull, NotEmpty] string value,
+                string value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
@@ -519,7 +519,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNull<T, TException>(
-                [NotNull, NoEnumeration] T value,
+                [NoEnumeration] T value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : class
@@ -538,7 +538,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNull<T, TException>(
-                [NotNull, NoEnumeration] T? value,
+                [NoEnumeration] T? value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
@@ -550,99 +550,99 @@ namespace Contract.Validation
                     : (T)value;
 
             /// <summary>Проверка что элементы последовательности не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ItemNullsNotAllowedException">Если в последовательности присутствуют элементы равные null</exception>
-            /// <param name="collection">Коллекция, элементы которой должен быть не null</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция, элементы которой должен быть не null</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ItemsNotNull<T>(
-                [NotNull, ItemNotNull, NoEnumeration] T collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] T value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : class, IEnumerable
                 => FullCheck
-                    ? Check.ItemsNotNull(collection, collectionName, message)
-                    : collection;
+                    ? Check.ItemsNotNull(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка что элементы последовательности не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ItemNullsNotAllowedException">Если в последовательности присутствуют элементы равные null</exception>
-            /// <param name="collection">Коллекция, элементы которой должен быть не null</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция, элементы которой должен быть не null</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ItemsNotNull<T>(
-                [NotNull, ItemNotNull, NoEnumeration] IEnumerable<T?> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] IEnumerable<T?> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
                 => FullCheck
-                    ? Check.ItemsNotNull(collection, collectionName, message)
-                    : collection.Cast<T>();
+                    ? Check.ItemsNotNull(value, valueName, message)
+                    : value.Cast<T>();
 
             /// <summary>Проверка что все строки не null и не пусты</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ItemNullsNotAllowedException">Если в последовательности присутствуют строки равные null</exception>
             /// <exception cref="ItemEmptyStringNotAllowedException">Если в последовательности присутствуют пустые строки</exception>
-            /// <param name="collection">Коллекция строк, которые быть не должны быть равны string.Empty</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция строк, которые быть не должны быть равны string.Empty</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<string> ItemsNotEmpty(
-                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] IEnumerable<string> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] IEnumerable<string> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ItemsNotEmpty(collection, collectionName, message)
-                    : collection;
+                    ? Check.ItemsNotEmpty(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка что элементы коллекции не null</summary>
-            /// <exception cref="NullReferenceException">Если <see cref="collection"/> == null</exception>
+            /// <exception cref="NullReferenceException">Если <see cref="value"/> == null</exception>
             /// <exception cref="ItemNullsNotAllowedException">Если в последовательности присутствуют строки равные null</exception>
             /// <exception cref="ItemEmptyStringNotAllowedException">Если в последовательности присутствуют пустые строки</exception>
             /// <exception cref="ItemWhitespaceNotAllowedException">Если в последовательности присутствуют строки не содержащие ничего кроме пробелов</exception>
-            /// <param name="collection">Коллекция строк, которые быть не должны быть равны string.Empty</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция строк, которые быть не должны быть равны string.Empty</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, ItemNotNull, ItemNotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<string> ItemsNotWhitespace(
-                [NotNull, ItemNotNull, ItemNotWhitespace, NoEnumeration] IEnumerable<string> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NotNull, ItemNotNull, ItemNotWhitespace, NoEnumeration] IEnumerable<string> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ItemsNotWhitespace(collection, collectionName, message)
-                    : collection;
+                    ? Check.ItemsNotWhitespace(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка что элементы коллекции не null и не DBNull</summary>
             /// <exception cref="NullReferenceException">Если условие не выполняется</exception>
-            /// <param name="collection">Коллекция, элементы которой должен быть не null</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция, элементы которой должен быть не null</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ItemsNotNullNotDbNull<T>(
-                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] T collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] T value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : class, IEnumerable
                 => FullCheck
-                    ? Check.ItemsNotNullNotDbNull(collection, collectionName, message)
-                    : collection;
+                    ? Check.ItemsNotNullNotDbNull(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка условия</summary>
             /// <exception cref="Exception">Если условие не выполняется</exception>
@@ -750,60 +750,60 @@ namespace Contract.Validation
             /// <summary>Проверка того, что все элементы последовательности являются объектами нужного типа</summary>
             /// <exception cref="ArgumentNullException">Если перечисление равно null</exception>
             /// <exception cref="Exception">Если обнаружен элемент не являющийся объектом нужного типа</exception>
-            /// <param name="collection">Коллекция</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ItemsIs<T>(
-                [NotNull, ItemNotNull, NoEnumeration] IEnumerable collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] IEnumerable value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.ItemsIs<T>(collection, collectionName, message)
-                    : collection.ConvertAll<T>();
+                    ? Check.ItemsIs<T>(value, valueName, message)
+                    : value.ConvertAll<T>();
 
             /// <summary>Проверка того, что все элементы последовательности являются объектами нужного типа</summary>
             /// <exception cref="ArgumentNullException">Если перечисление равно null</exception>
             /// <exception cref="Exception">Если обнаружен элемент не являющийся объектом нужного типа</exception>
-            /// <param name="collection">Коллекция</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="messageFactory">Метод-фабрика сообщений об ошибке</param>
             [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ItemsIs<T>(
-                [NotNull, ItemNotNull, NoEnumeration] IEnumerable collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName,
+                [NoEnumeration] IEnumerable value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName,
                 [NotNull, InstantHandle] ObjectMessageFactory messageFactory)
                 => FullCheck
-                    ? Check.ItemsIs<T>(collection, collectionName, messageFactory)
-                    : collection.ConvertAll<T>();
+                    ? Check.ItemsIs<T>(value, valueName, messageFactory)
+                    : value.ConvertAll<T>();
 
             /// <summary>Проверка того, что все элементы последовательности являются объектами нужного типа</summary>
             /// <exception cref="ArgumentNullException">Если перечисление равно null</exception>
             /// <exception cref="Exception">Если обнаружен элемент не являющийся объектом нужного типа</exception>
-            /// <param name="collection">Коллекция</param>
+            /// <param name="value">Коллекция</param>
             /// <param name="messageFactory">Метод-фабрика сообщений об ошибке</param>
             [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ItemsIs<T>(
-                [NotNull, ItemNotNull, NoEnumeration] IEnumerable collection,
+                [NoEnumeration] IEnumerable value,
                 [NotNull, InstantHandle] ObjectMessageFactory messageFactory)
                 => FullCheck
-                    ? Check.ItemsIs<T>(collection, UnknownValueName, messageFactory)
-                    : collection.ConvertAll<T>();
+                    ? Check.ItemsIs<T>(value, UnknownValueName, messageFactory)
+                    : value.ConvertAll<T>();
 
             /// <summary>Условие, которое должно выполняться для всех элементов перечисления</summary>
             /// <exception cref="ArgumentNullException">Если перечисление или условие проверки элемента равно null</exception>
             /// <exception cref="Exception">Если для какого-нибудь элемента перечисления не выполнится переданное условие</exception>
-            /// <param name="collection">Коллекция</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="predicate">Условие</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -811,19 +811,19 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> All<T>(
-                [NotNull, NoEnumeration] IEnumerable<T> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName,
+                [NoEnumeration] IEnumerable<T> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName,
                 [NotNull, InstantHandle] Func<T, bool> predicate,
                 [CanBeNull] string message = null)
                 => FullCheck
-                    ? Check.All(collection, collectionName, predicate, message)
-                    : collection;
+                    ? Check.All(value, valueName, predicate, message)
+                    : value;
 
             /// <summary>Условие, которое должно выполняться для всех элементов перечисления</summary>
             /// <exception cref="ArgumentNullException">Если перечисление или условие проверки элемента равно null</exception>
             /// <exception cref="Exception">Если для какого-нибудь элемента перечисления не выполнится переданное условие</exception>
-            /// <param name="collection">Коллекция</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="predicate">Условие</param>
             /// <param name="messageFactory">Метод-конструктор сообщения об ошибке</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -831,18 +831,18 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> All<T>(
-                [NotNull, NoEnumeration] IEnumerable<T> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName,
+                [NoEnumeration] IEnumerable<T> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName,
                 [NotNull, InstantHandle] Func<T, bool> predicate,
                 [NotNull] TemplateMessageFactory<T> messageFactory)
                 => FullCheck
-                    ? Check.All(collection, collectionName, predicate, messageFactory)
-                    : collection;
+                    ? Check.All(value, valueName, predicate, messageFactory)
+                    : value;
 
             /// <summary>Условие, которое должно выполняться для всех элементов перечисления</summary>
             /// <exception cref="ArgumentNullException">Если перечисление или условие проверки элемента равно null</exception>
             /// <exception cref="Exception">Если для какого-нибудь элемента перечисления не выполнится переданное условие</exception>
-            /// <param name="collection">Коллекция</param>
+            /// <param name="value">Коллекция</param>
             /// <param name="predicate">Условие</param>
             /// <param name="messageFactory">Метод-конструктор сообщения об ошибке</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
@@ -850,50 +850,50 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> All<T>(
-                [NotNull, NoEnumeration] IEnumerable<T> collection,
+                [NoEnumeration] IEnumerable<T> value,
                 [NotNull, InstantHandle] Func<T, bool> predicate,
                 [NotNull] TemplateMessageFactory<T> messageFactory)
                 => FullCheck
-                    ? Check.All(collection, UnknownValueName, predicate, messageFactory)
-                    : collection;
+                    ? Check.All(value, UnknownValueName, predicate, messageFactory)
+                    : value;
 
             /// <summary>Проверка, что перечисление не пусто</summary>
             /// <exception cref="NullReferenceException">Если перечисление равно null</exception>
             /// <exception cref="CollectionIsEmptyException">Если перечисление пусто</exception>
-            /// <param name="collection">Коллекция</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static TEnumerable NotNullNotEmpty<TEnumerable>(
-                [NotNull, NotEmpty, NoEnumeration] TEnumerable collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] TEnumerable value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull, CanBeEmpty] string message = null)
                 where TEnumerable : class, IEnumerable
                 => FullCheck
-                    ? Check.NotNullNotEmpty(collection, collectionName, message)
-                    : collection;
+                    ? Check.NotNullNotEmpty(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка, что коллекция не пуста</summary>
             /// <exception cref="ArgumentNullException">Если коллекция равна null</exception>
             /// <exception cref="ArgumentCollectionIsEmptyException">Если коллекция пуста</exception>
-            /// <param name="collection">Коллекция</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Коллекция</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static TEnumerable ArgumentNotNullNotEmpty<TEnumerable>(
-                [NotNull, NotEmpty, NoEnumeration] TEnumerable collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] TEnumerable value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull, CanBeEmpty] string message = null)
                 where TEnumerable : class, IEnumerable
                 => FullCheck
-                    ? Check.ArgumentNotNullNotEmpty(collection, collectionName, message)
-                    : collection;
+                    ? Check.ArgumentNotNullNotEmpty(value, valueName, message)
+                    : value;
 
             /// <summary>Проверка состояния объекта (значений полей/свойств)</summary>
             /// <exception cref="InvalidOperationException">Если condition == false</exception>
@@ -923,7 +923,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ObjectState<T>(
-                [NotNull, NoEnumeration] T value,
+                [NoEnumeration] T value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName,
                 [NotNull] Func<T, bool> condition,
                 [CanBeNull, InvokerParameterName] string message = null)
@@ -942,7 +942,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ObjectState<T>(
-                [NotNull, NoEnumeration] T value,
+                [NoEnumeration] T value,
                 [NotNull] Func<T, bool> condition,
                 [CanBeNull, InvokerParameterName] string message = null)
                 => FullCheck
@@ -990,8 +990,8 @@ namespace Contract.Validation
             /// <summary>Проверка того, что значение является допустимым для данного типа перечня (enum)</summary>
             /// <exception cref="InvalidEnumArgumentException">Если значение является недопустимым</exception>
             /// <param name="enumType">Тип перечня (enum)</param>
-            /// <param name="collection">Список значений</param>
-            /// <param name="collectionName">Наименование коллекции</param>
+            /// <param name="value">Список значений</param>
+            /// <param name="valueName">Наименование коллекции</param>
             /// <param name="message">Сообщение об ошибке</param>
             [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
@@ -999,13 +999,13 @@ namespace Contract.Validation
 #endif
             public static IEnumerable<T> AllEnumInRange<T>(
                 [NotNull] Type enumType,
-                [NotNull, NoEnumeration] IEnumerable<T> collection,
-                [CanBeNull, NotWhitespace, InvokerParameterName] string collectionName = null,
+                [NoEnumeration] IEnumerable<T> value,
+                [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 where T : struct
                 => FullCheck
-                    ? Check.AllEnumInRange(enumType, collection, collectionName, message)
-                    : collection;
+                    ? Check.AllEnumInRange(enumType, value, valueName, message)
+                    : value;
 
             /// <summary>Проверка типа объекта, выбрасывает исключительную ситуацию если проверка не пройдена</summary>
             /// <exception cref="NullReferenceException">Если объект null</exception>
@@ -1018,7 +1018,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T Is<T>(
-                [NotNull, NoEnumeration] object value,
+                [NoEnumeration] object value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName = null,
                 [CanBeNull] string message = null)
                 => FullCheck
@@ -1036,7 +1036,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T Is<T>(
-                [NotNull, NoEnumeration] object value,
+                [NoEnumeration] object value,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string valueName,
                 [NotNull, InstantHandle] ObjectMessageFactory messageFactory)
                 => FullCheck
@@ -1053,7 +1053,7 @@ namespace Contract.Validation
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T Is<T>(
-                [NotNull, NoEnumeration] object value,
+                [NoEnumeration] object value,
                 [NotNull, InstantHandle] ObjectMessageFactory messageFactory)
                 => FullCheck
                     ? Check.Is<T>(value, UnknownValueName, messageFactory)
@@ -1105,7 +1105,7 @@ namespace Contract.Validation
             /// <returns>Стрим</returns>
             [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
             public static Stream StreamNotEmpty(
-                [NotNull, NotEmpty] Stream stream,
+                [NotNull] Stream stream,
                 [CanBeNull, NotWhitespace, InvokerParameterName] string streamName,
                 [CanBeNull] string message = null)
                 => FullCheck
