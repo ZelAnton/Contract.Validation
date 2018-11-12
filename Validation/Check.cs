@@ -1682,7 +1682,7 @@ namespace Contract.Validation
         {
             ArgumentNotNullOrWhitespace(value, valueName);
 
-            if (!Uri.TryCreate(value, UriKind.Absolute, out Uri uri) || scheme != UriScheme.Any && scheme != UriScheme.None && UriSchemes.Name2Value[uri.Scheme] == scheme)
+            if (!Uri.TryCreate(value, UriKind.Absolute, out Uri uri) || scheme != UriScheme.Any && scheme != UriScheme.None && UriSchemes.Name2Value[uri.Scheme] != scheme)
             {
                 valueName = valueName ?? UnknownValueName;
                 throw new InvalidUriException(value, valueName, string.IsNullOrWhiteSpace(message) ? $"Uri address {value} not correct" : message);
