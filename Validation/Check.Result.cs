@@ -16,12 +16,7 @@ using System.Runtime.ConstrainedExecution;
 #endif
 
 // ReSharper disable ArrangeAttributes
-// ReSharper disable InvalidXmlDocComment
-// ReSharper disable LoopCanBeConvertedToQuery
-// ReSharper disable ExplicitCallerInfoArgument
-// ReSharper disable LoopCanBePartlyConvertedToQuery
 // ReSharper disable MemberHidesStaticFromOuterClass
-// ReSharper disable RedundantTypeSpecificationInDefaultExpression
 
 namespace Contract.Validation
 {
@@ -65,7 +60,7 @@ namespace Contract.Validation
             /// <param name="value">Объект, который не должен быть равен null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -87,7 +82,7 @@ namespace Contract.Validation
             /// <param name="value">Объект, который не должен быть равен null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -130,15 +125,15 @@ namespace Contract.Validation
 
             /// <summary>Проверка перечисление на отсутствие значений по-умолчанию</summary>
             /// <exception cref="ValueEmptyException">Если в перечислении присутствует значение == default(T)</exception>
-            /// <param name="values">Перечисление значений, которые не должны быть равны значению по-умолчанию для своего типа</param>
+            /// <param name="value">Перечисление значений, которые не должны быть равны значению по-умолчанию для своего типа</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<T> ValuesNotEmpty<T>(
-                [NoEnumeration] IEnumerable<T> values,
+                [NoEnumeration] IEnumerable<T> value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -147,8 +142,8 @@ namespace Contract.Validation
                 string callerMemberName = null)
                 where T : struct
                 => FullCheck
-                    ? Check.ValuesNotEmpty(values, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : values;
+                    ? Check.ValuesNotEmpty(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка строки на null и на равенство string.Empty</summary>
             /// <exception cref="NullReferenceException">Если строка == null</exception>
@@ -156,7 +151,7 @@ namespace Contract.Validation
             /// <param name="value">Строковый аргумент, который не должен быть равен null или string.Empty</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -179,12 +174,12 @@ namespace Contract.Validation
             /// <param name="value">Строковый аргумент, который не должен быть равен null или string.Empty, или состоять только из пробелов</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static string NotNullOrWhitespace(
-                [NotNull, NotWhitespace] string value,
+                string value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -200,12 +195,12 @@ namespace Contract.Validation
             /// <param name="value">Объект, который не должен быть равен null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T NotNullNotDbNull<T>(
-                [NotNull, NotEmpty] T value,
+                T value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -222,7 +217,7 @@ namespace Contract.Validation
             /// <param name="value">Объект, который должен быть не null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -245,7 +240,7 @@ namespace Contract.Validation
             /// <param name="value">Объект, который должен быть не null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt"), MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -271,7 +266,7 @@ namespace Contract.Validation
             /// <param name="value">Коллекция, элементы которой должен быть не null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -294,7 +289,7 @@ namespace Contract.Validation
             /// <param name="value">Коллекция, элементы которой должен быть не null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -318,12 +313,12 @@ namespace Contract.Validation
             /// <param name="value">Коллекция строк, которые быть не должны быть равны string.Empty</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<string> ItemsNotEmpty(
-                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] IEnumerable<string> value,
+                [NoEnumeration] IEnumerable<string> value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -342,12 +337,12 @@ namespace Contract.Validation
             /// <param name="value">Коллекция строк, которые быть не должны быть равны string.Empty</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, ItemNotNull, ItemNotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, ItemNotNull, ItemNotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static IEnumerable<string> ItemsNotWhitespace(
-                [NotNull, ItemNotNull, ItemNotWhitespace, NoEnumeration] IEnumerable<string> value,
+                [NoEnumeration] IEnumerable<string> value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -363,12 +358,12 @@ namespace Contract.Validation
             /// <param name="value">Коллекция, элементы которой должен быть не null</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, ItemNotNull, ItemNotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static T ItemsNotNullNotDbNull<T>(
-                [NotNull, ItemNotNull, ItemNotEmpty, NoEnumeration] T value,
+                [NoEnumeration] T value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -451,7 +446,7 @@ namespace Contract.Validation
             /// <param name="value">Коллекция</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -473,7 +468,7 @@ namespace Contract.Validation
             /// <param name="value">Коллекция</param>
             /// <param name="messageFactory">Метод-фабрика сообщений об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, ItemNotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -496,7 +491,7 @@ namespace Contract.Validation
             /// <param name="predicate">Условие</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -520,7 +515,7 @@ namespace Contract.Validation
             /// <param name="predicate">Условие</param>
             /// <param name="messageFactory">Метод-конструктор сообщения об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -543,7 +538,7 @@ namespace Contract.Validation
             /// <param name="value">Коллекция</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -567,7 +562,7 @@ namespace Contract.Validation
             /// <param name="condition">Условие, которое должно быть true</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, ContractAnnotation("condition:false => halt"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("condition:false => halt; value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -636,7 +631,7 @@ namespace Contract.Validation
             /// <param name="value">Список значений</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -660,7 +655,7 @@ namespace Contract.Validation
             /// <param name="value">Проверяемый объект</param>
             /// <param name="message">Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -682,7 +677,7 @@ namespace Contract.Validation
             /// <param name="value">Проверяемый объект</param>
             /// <param name="messageFactory">Внешняя ф-ия получения сообщения об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
-            [Pure, NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
@@ -703,13 +698,13 @@ namespace Contract.Validation
             /// <exception cref="ArgumentEmptyStringNotAllowedException">Если указанный путь == string.Empty</exception>
             /// <exception cref="ArgumentWhitespaceNotAllowedException">Если указанный путь состоит только из пробелов</exception>
             /// <exception cref="FileNotFoundException">Если файл отсутствует на диске</exception>
-            /// <param name="fileName">Путь к файлу</param>
+            /// <param name="value">Путь к файлу</param>
             /// <param name="message">(Optional) Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             /// <returns>Путь к файлу</returns>
-            [Pure, NotNull, FileExists, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, FileExists, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
             public static string FileExists(
-                [NotNull, NotWhitespace, FileExists] string fileName,
+                string value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -717,21 +712,21 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.FileExists(fileName, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : fileName;
+                    ? Check.FileExists(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка того, что папка по указанному пути существует на диске</summary>
             /// <exception cref="ArgumentNullException">Если указанный путь == null</exception>
             /// <exception cref="ArgumentEmptyStringNotAllowedException">Если указанный путь == string.Empty</exception>
             /// <exception cref="ArgumentWhitespaceNotAllowedException">Если указанный путь состоит только из пробелов</exception>
             /// <exception cref="DirectoryNotFoundException">Если папка отсутствует на диске</exception>
-            /// <param name="path">Путь к папке</param>
+            /// <param name="value">Путь к папке</param>
             /// <param name="message">(Optional) Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             /// <returns>Путь к папке</returns>
-            [Pure, NotNull, DirectoryExists, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, DirectoryExists, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
             public static string DirectoryExists(
-                [NotNull, NotWhitespace, DirectoryExists] string path,
+                string value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -739,20 +734,20 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.DirectoryExists(path, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : path;
+                    ? Check.DirectoryExists(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка что стрим не равен null, что имеет ненулевую длину и текущая позиция не находится в конце стрима</summary>
             /// <exception cref="ArgumentNullException">Если переданный стрим == null</exception>
             /// <exception cref="Exception">Если длина стрима равна 0</exception>
             /// <exception cref="EndOfStreamException">Если позиция в преданном стриме находится в его конце</exception>
-            /// <param name="stream">Стрим</param>
+            /// <param name="value">Стрим</param>
             /// <param name="message">(Optional) Сообщение об ошибке</param>
             /// <param name="callerMemberName">(Заполняется компилятором) Наименование метода, чей результат проверяется</param>
             /// <returns>Стрим</returns>
-            [Pure, NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, NotEmpty, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
             public static Stream StreamNotEmpty(
-                [NotNull] Stream stream,
+                Stream value,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK
                 [CallerMemberName]
@@ -760,8 +755,8 @@ namespace Contract.Validation
                 [CanBeNull]
                 string callerMemberName = null)
                 => FullCheck
-                    ? Check.StreamNotEmpty(stream, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
-                    : stream;
+                    ? Check.StreamNotEmpty(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
+                    : value;
 
             /// <summary>Проверка что строка содержит корректный Uri</summary>
             /// <exception cref="ArgumentNullException">Если строка описывающая Uri == null</exception>
@@ -773,12 +768,12 @@ namespace Contract.Validation
             /// <param name="message">(Optional) Сообщение об ошибке</param>
             /// <param name="callerMemberName">Наименование строки</param>
             /// <returns>Строка, содержащая Uri</returns>
-            [Pure, NotNull, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
+            [Pure, ContractAnnotation("value:null => halt; => NotNull"), NotNull, NotWhitespace, MethodImpl(MethodImplOptions.AggressiveInlining), DebuggerStepThrough]
 #if FEATURE_RELIABILITY_CONTRACTS
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
 #endif
             public static string UriCorrect(
-                [NotNull, NotWhitespace] string value,
+                string value,
                 UriScheme scheme = UriScheme.Any,
                 [CanBeNull] string message = null,
 #if DEBUG || FULL_CHECK

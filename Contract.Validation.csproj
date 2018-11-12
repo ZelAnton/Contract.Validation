@@ -8,19 +8,23 @@
     <PackageProjectUrl>https://github.com/ZelAnton/Contract.Validation</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>2018 (c) Anton Zhelezniakou &lt;ZelAntonLJ@gmail.com&gt;</Copyright>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
-    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
+    <Version>1.0.3</Version>
     <Configurations>Debug;Release</Configurations>
     <Product>Contract.Validation</Product>
     <PackageId>Contract.Validation</PackageId>
+    <PackageTags>Contract, Contracts, Resharper, JetBrains, Annotations</PackageTags>
+    <Description>Validation of contract annotations from JetBrains.Annotations and some added to them</Description>
+    <RepositoryType>nuget</RepositoryType>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
     <PackageId>Contract.Validation</PackageId>
     <AssemblyName>Contract.Validation</AssemblyName>
-    <Optimize>false</Optimize>
+    <RepositoryUrl>https://www.nuget.org/packages/Contract.Validation/</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -29,6 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <PackageId>Contract.Validation.Debug</PackageId>
     <AssemblyName>Contract.Validation.Debug</AssemblyName>
+    <RepositoryUrl>https://www.nuget.org/packages/Contract.Validation.Debug/</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
