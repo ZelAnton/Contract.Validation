@@ -96,7 +96,6 @@ namespace Contract.Validation
                 string callerMemberName = null)
                 where T : struct
                 => FullCheck
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     ? Check.NotNull(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
                     // ReSharper disable once PossibleInvalidOperationException
                     : (T)value;
@@ -255,7 +254,6 @@ namespace Contract.Validation
                 where T : struct
                 where TException : NullReferenceException
                 => FullCheck
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     ? Check.NotNull<T, TException>(value, callerMemberName != null ? $"Return value of {callerMemberName}" : null, message)
                     // ReSharper disable once PossibleInvalidOperationException
                     : (T)value;

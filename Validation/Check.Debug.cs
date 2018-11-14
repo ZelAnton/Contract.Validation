@@ -67,7 +67,6 @@ namespace Contract.Validation
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 where T : struct
-                // ReSharper disable once AssignNullToNotNullAttribute
                 => Check.ArgumentNotNull(value, valueName, message);
 
             /// <summary>Проверка аргумента на значение по-умолчанию</summary>
@@ -368,7 +367,6 @@ namespace Contract.Validation
                 [NotNull, NotWhitespace, InvokerParameterName] string valueName,
                 [CanBeNull] string message = null)
                 where T : struct
-                // ReSharper disable once AssignNullToNotNullAttribute
                 => Check.NotNull(value, valueName, message);
 
             /// <summary>Проверка значения на значение по-умолчанию</summary>
@@ -484,7 +482,6 @@ namespace Contract.Validation
                 [CanBeNull] string message = null)
                 where T : struct
                 where TException : NullReferenceException
-                // ReSharper disable once AssignNullToNotNullAttribute
                 => Check.NotNull<T, TException>(value, valueName, message);
 
             /// <summary>Проверка что элементы последовательности не null</summary>

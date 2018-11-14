@@ -77,7 +77,6 @@ namespace Contract.Validation
                 [CanBeNull] string message = null)
                 where T : struct
                 => FullCheck
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     ? Check.ArgumentNotNull(value, valueName, message)
                     // ReSharper disable once PossibleInvalidOperationException
                     : (T)value;
@@ -409,7 +408,6 @@ namespace Contract.Validation
                 [CanBeNull] string message = null)
                 where T : struct
                 => FullCheck
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     ? Check.NotNull(value, valueName, message)
                     // ReSharper disable once PossibleInvalidOperationException
                     : (T)value;
@@ -540,7 +538,6 @@ namespace Contract.Validation
                 where T : struct
                 where TException : NullReferenceException
                 => FullCheck
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     ? Check.NotNull<T, TException>(value, valueName, message)
                     // ReSharper disable once PossibleInvalidOperationException
                     : (T)value;
