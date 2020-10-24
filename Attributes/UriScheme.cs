@@ -81,6 +81,7 @@ namespace JetBrains.Annotations
             };
 
             Name2Value = new Dictionary<string, UriScheme>(StringComparer.InvariantCultureIgnoreCase) {
+                // ReSharper disable AssignNullToNotNullAttribute
                 [Const_None] = UriScheme.None,
                 [Const_Any] = UriScheme.Any,
                 [Uri.UriSchemeFile] = UriScheme.File,
@@ -93,6 +94,7 @@ namespace JetBrains.Annotations
                 [Uri.UriSchemeNntp] = UriScheme.Nntp,
                 [Uri.UriSchemeNetTcp] = UriScheme.NetTcp,
                 [Uri.UriSchemeNetPipe] = UriScheme.NetPipe
+                // ReSharper restore AssignNullToNotNullAttribute
             };
         }
     }

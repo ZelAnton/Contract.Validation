@@ -1,60 +1,74 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
 namespace Contract.Exceptions
 {
-    /// <summary>Значение не может быть пустым.</summary>
+    /// <summary>Exception "Collection cannot be empty."</summary>
     [Serializable]
     public class CollectionIsEmptyException : ValueException, ISerializable
     {
-        [CanBeNull, CanBeEmpty] public string CollectionName => ValueName;
+        [CanBeNull, CanBeEmpty]
+        public string CollectionName {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ValueName;
+        }
 
-        public CollectionIsEmptyException() { }
+        public CollectionIsEmptyException()
+        { }
 
         public CollectionIsEmptyException(
             [CanBeNull, CanBeEmpty, InvokerParameterName] string collectionName,
             [CanBeNull, CanBeEmpty] string message = null)
-            : base(collectionName, message) { }
+            : base(collectionName, message)
+        { }
 
         protected CollectionIsEmptyException([NotNull] SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
 
         [NotNull]
-        public override string Message =>
-            string.IsNullOrWhiteSpace(OriginalMessage)
+        public override string Message
+            => string.IsNullOrWhiteSpace(OriginalMessage)
                 ? !string.IsNullOrWhiteSpace(CollectionName)
-                    ? $"Коллекция {CollectionName} пуста, что недопустимо в данном контексте"
-                    : "Коллекция пуста, что недопустимо в данном контексте"
+                    ? $"{CollectionName} collection cannot be empty."
+                    : "Collection cannot be empty."
                 : OriginalMessage;
     }
 
-    /// <summary>Значение не может быть пустым.</summary>
+    /// <summary>Exception "Argument collection cannot be empty."</summary>
     [Serializable]
     public class ArgumentCollectionIsEmptyException : ArgumentException, ISerializable
     {
-        [CanBeNull, CanBeEmpty] public string CollectionName => ParamName;
+        [CanBeNull, CanBeEmpty]
+        public string CollectionName {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ParamName;
+        }
 
-        public ArgumentCollectionIsEmptyException() { }
+        public ArgumentCollectionIsEmptyException()
+        { }
 
         public ArgumentCollectionIsEmptyException(
             [CanBeNull, CanBeEmpty, InvokerParameterName] string collectionName,
             [CanBeNull, CanBeEmpty] string message = null)
-            : base(message, collectionName) { }
+            : base(message, collectionName)
+        { }
 
         protected ArgumentCollectionIsEmptyException([NotNull] SerializationInfo info, StreamingContext context)
-            : base(info, context) {}
+            : base(info, context)
+        { }
 
-        [CanBeNull, CanBeEmpty]
-        protected string OriginalMessage => base.Message;
+        [CanBeNull, CanBeEmpty] protected string OriginalMessage => base.Message;
 
         [NotNull]
-        public override string Message =>
-            string.IsNullOrWhiteSpace(OriginalMessage)
+        public override string Message
+            => string.IsNullOrWhiteSpace(OriginalMessage)
                 ? !string.IsNullOrWhiteSpace(CollectionName)
-                    ? $"Коллекция {CollectionName} пуста, что недопустимо в данном контексте"
-                    : "Коллекция пуста, что недопустимо в данном контексте"
+                    ? $"Argument {CollectionName} collection cannot be empty."
+                    : "Argument collection cannot be empty."
                 : OriginalMessage;
     }
 }

@@ -5,27 +5,30 @@ using JetBrains.Annotations;
 
 namespace Contract.Exceptions
 {
-    /// <summary>(Serializable) Операция отменена в силу описанных причин.</summary>
+    /// <summary>Exception "Operation aborted"</summary>
     [Serializable]
     public class OperationAbortedException : SystemException, ISerializable
     {
-        /// <summary>Описание отменённой операции</summary>
+        /// <summary>Aborted operation name</summary>
         [CanBeNull, CanBeEmpty] public string OperationName { get; }
 
-        /// <summary>Причина отмены операции</summary>
+        /// <summary>Reason for aborting the operation</summary>
         [CanBeNull, CanBeEmpty] public string Reason { get; }
 
-        public OperationAbortedException() { }
+        public OperationAbortedException()
+        { }
 
         [NotNull, NotEmpty]
-        private static string GetMessage([CanBeNull, CanBeEmpty] string operationName, [CanBeNull, CanBeEmpty] string reason = null) =>
-            string.IsNullOrWhiteSpace(operationName)
+        private static string GetMessage(
+            [CanBeNull, CanBeEmpty] string operationName,
+            [CanBeNull, CanBeEmpty] string reason = null)
+            => string.IsNullOrWhiteSpace(operationName)
                 ? string.IsNullOrWhiteSpace(reason)
-                    ? "Операция отменена"
-                    : $"Операция отменена: {reason}"
+                    ? "Operation aborted."
+                    : $"Operation aborted due to: {Environment.NewLine}{reason}"
                 : string.IsNullOrWhiteSpace(reason)
-                    ? $"Операция \"{operationName}\" отменена"
-                    : $"Операция \"{operationName}\" отменена: {reason}";
+                    ? $"Operation \"{operationName}\" aborted."
+                    : $"Operation \"{operationName}\" aborted due to: {Environment.NewLine}{reason}";
 
 
         public OperationAbortedException(
@@ -38,8 +41,11 @@ namespace Contract.Exceptions
             Reason = reason;
         }
 
-        public OperationAbortedException([CanBeNull, CanBeEmpty] string operationName, [CanBeNull] Exception innerException)
-            : base(GetMessage(operationName), innerException) => OperationName = operationName;
+        public OperationAbortedException(
+            [CanBeNull, CanBeEmpty] string operationName,
+            [CanBeNull] Exception innerException)
+            : base(GetMessage(operationName), innerException)
+            => OperationName = operationName;
 
         protected OperationAbortedException([NotNull] SerializationInfo info, StreamingContext context)
             : base(info, context)
@@ -48,7 +54,7 @@ namespace Contract.Exceptions
             Reason = info.GetString(nameof(Reason));
         }
 
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context) //-V3099
         {
             base.GetObjectData(info, context);
 
@@ -56,6 +62,9 @@ namespace Contract.Exceptions
             info.AddValue(nameof(Reason), Reason);
         }
 
-        [CanBeNull] protected string OriginalMessage => base.Message;
+        [CanBeNull]
+        protected string OriginalMessage
+            // ReSharper disable once RedundantBaseQualifier
+            => base.Message;
     }
 }

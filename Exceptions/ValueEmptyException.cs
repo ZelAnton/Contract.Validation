@@ -5,50 +5,58 @@ using JetBrains.Annotations;
 
 namespace Contract.Exceptions
 {
-    /// <summary>Значение не может быть пустым.</summary>
+    /// <summary>Exception "Value cannot be empty."</summary>
     [Serializable]
     public class ValueEmptyException : ValueException, ISerializable
     {
-        public ValueEmptyException() { }
+        public ValueEmptyException()
+        { }
 
         public ValueEmptyException(
             [CanBeNull, CanBeEmpty, InvokerParameterName] string valueName,
             [CanBeNull, CanBeEmpty] string message = null)
-            : base(valueName, message) { }
+            : base(valueName, message)
+        { }
 
         protected ValueEmptyException([NotNull] SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
 
         [NotNull]
-        public override string Message =>
-            string.IsNullOrWhiteSpace(OriginalMessage)
+        public override string Message
+            => string.IsNullOrWhiteSpace(OriginalMessage)
                 ? !string.IsNullOrWhiteSpace(ValueName)
-                    ? $"Значение {ValueName} пусто, что недопустимо в данном контексте"
-                    : "Значение пусто, что недопустимо в данном контексте"
+                    ? $"{ValueName} value cannot be empty."
+                    : "Value cannot be empty."
                 : OriginalMessage;
     }
 
-    /// <summary>Аргумент не может быть пуст.</summary>
+    /// <summary>Exception "Argument value cannot be empty."</summary>
     [Serializable]
     public class ArgumentValueEmptyException : ArgumentException, ISerializable
     {
-        public ArgumentValueEmptyException() { }
+        public ArgumentValueEmptyException()
+        { }
 
         public ArgumentValueEmptyException(
             [CanBeNull, CanBeEmpty] string argumentName,
             [CanBeNull, CanBeEmpty] string message = null)
-            : base(message, argumentName) { }
+            : base(message, argumentName)
+        { }
 
-        protected ArgumentValueEmptyException([NotNull] SerializationInfo info, StreamingContext context) : base(info, context) { }
+        protected ArgumentValueEmptyException([NotNull] SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        { }
 
-        [CanBeNull] protected string OriginalMessage => base.Message;
+        [CanBeNull] protected string OriginalMessage
+            => base.Message;
 
         [NotNull]
-        public override string Message =>
-            string.IsNullOrWhiteSpace(OriginalMessage)
+        public override string Message
+            => string.IsNullOrWhiteSpace(OriginalMessage)
                 ? !string.IsNullOrWhiteSpace(ParamName)
-                    ? $"Значение {ParamName} пусто, что недопустимо в данном контексте"
-                    : "Значение пусто, что недопустимо в данном контексте"
+                    ? $"Argument {ParamName} value cannot be empty."
+                    : "Argument value cannot be empty."
                 : OriginalMessage;
     }
 }

@@ -6,16 +6,18 @@ using JetBrains.Annotations;
 
 namespace Contract.Exceptions
 {
-    /// <summary>Исключительная ситуация вида "Коллекция строк не должна содержать пустые строки".</summary>
+    /// <summary>Exception "String collection cannot contains empty strings."</summary>
     [Serializable]
     public class ItemEmptyStringNotAllowedException : EmptyStringNotAllowedException, ISerializable
     {
         [CanBeNull] public string CollectionClassName { get; }
 
-        [CanBeNull] public string CollectionName => ValueName;
+        [CanBeNull] public string CollectionName
+            => ValueName;
 
         public ItemEmptyStringNotAllowedException()
-            : this(null, null, null) { }
+            : this(null, null, null)
+        { }
 
         public ItemEmptyStringNotAllowedException(
             [CanBeNull, NoEnumeration] IEnumerable<string> strings,
@@ -27,54 +29,73 @@ namespace Contract.Exceptions
         public ItemEmptyStringNotAllowedException(
             [CanBeNull, InvokerParameterName] string collectionName,
             [CanBeNull] string message = null)
-            : this(null, collectionName, message) { }
+            : this(null, collectionName, message)
+        { }
 
-        public ItemEmptyStringNotAllowedException([NotNull] SerializationInfo info, StreamingContext context)
+        protected ItemEmptyStringNotAllowedException([NotNull] SerializationInfo info, StreamingContext context)
             : base(info, context)
+            => CollectionClassName = info.GetString(nameof(CollectionClassName));
+
+        public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
         {
+            base.GetObjectData(info, context);
+
+            info.AddValue(nameof(CollectionClassName), CollectionClassName);
         }
 
         [NotNull]
-        public override string Message =>
-            string.IsNullOrWhiteSpace(OriginalMessage)
+        public override string Message
+            => string.IsNullOrWhiteSpace(OriginalMessage)
                 ? !string.IsNullOrWhiteSpace(CollectionName)
                     ? !string.IsNullOrWhiteSpace(CollectionClassName)
-                        ? $"Коллекция строк {CollectionName} типа {CollectionClassName} содержит пустые строки, что недопустимо в данном контексте"
-                        : $"Коллекция строк {CollectionName} содержит пустые строки, что недопустимо в данном контексте"
-                    : "Коллекция содержит пустые строки, что недопустимо в данном контексте"
+                        ? $"Strings collection {CollectionName} of type {CollectionClassName} cannot contains empty strings."
+                        : $"Strings collection {CollectionName} cannot contains empty strings."
+                    : "String collection cannot contains empty strings."
                 : OriginalMessage;
     }
 
-    /// <summary>Исключительная ситуация вида "Коллекция строк не должна содержать пустые строки".</summary>
+    /// <summary>Exception "Argument strings collection cannot contains empty strings."</summary>
     [Serializable]
     public class ArgumentItemEmptyStringNotAllowedException : ArgumentEmptyStringNotAllowedException, ISerializable
     {
         [CanBeNull] public string CollectionClassName { get; }
 
         public ArgumentItemEmptyStringNotAllowedException()
-            : this(null, null, null) { }
+            : this(null, null, null)
+        { }
 
         public ArgumentItemEmptyStringNotAllowedException(
             [CanBeNull, NoEnumeration] IEnumerable<string> strings,
             [CanBeNull, InvokerParameterName] string collectionName,
             [CanBeNull] string message = null)
             : base(collectionName, message)
-            => CollectionClassName = strings?.GetType().FullName;
+                => CollectionClassName = strings?.GetType().FullName;
 
-        public ArgumentItemEmptyStringNotAllowedException([CanBeNull, InvokerParameterName] string collectionName, [CanBeNull] string message = null)
-            : this(null, collectionName, message) { }
+        public ArgumentItemEmptyStringNotAllowedException(
+            [CanBeNull, InvokerParameterName] string collectionName,
+            [CanBeNull] string message = null)
+            : this(null, collectionName, message)
+        { }
 
-        public ArgumentItemEmptyStringNotAllowedException([NotNull] SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+        protected ArgumentItemEmptyStringNotAllowedException([NotNull] SerializationInfo info, StreamingContext context)
+            : base(info, context)
+            => CollectionClassName = info.GetString(nameof(CollectionClassName));
+
+        public override void GetObjectData([NotNull] SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+
+            info.AddValue(nameof(CollectionClassName), CollectionClassName);
+        }
 
         [NotNull]
-        public override string Message =>
-            string.IsNullOrWhiteSpace(OriginalMessage)
+        public override string Message
+            => string.IsNullOrWhiteSpace(OriginalMessage)
                 ? !string.IsNullOrWhiteSpace(ParamName)
                     ? !string.IsNullOrWhiteSpace(CollectionClassName)
-                        ? $"Коллекция строк {ParamName} типа {CollectionClassName} содержит пустые строки, что недопустимо в данном контексте"
-                        : $"Коллекция строк {ParamName} содержит пустые строки, что недопустимо в данном контексте"
-                    : "Коллекция содержит пустые строки, что недопустимо в данном контексте"
+                        ? $"Argument strings collection {ParamName} of type {CollectionClassName} cannot contains empty strings."
+                        : $"Argument strings collection {ParamName} cannot contains empty strings."
+                    : "Argument strings collection cannot contains empty strings."
                 : OriginalMessage;
     }
 }
